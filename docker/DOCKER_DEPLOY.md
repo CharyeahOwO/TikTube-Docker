@@ -66,7 +66,7 @@ sudo lsof -i :8080 -i :3306 -i :6379
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/TikTube-Docker.git
+git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 cd TikTube-Docker
 
 # 项目结构
