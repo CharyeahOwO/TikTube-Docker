@@ -1,209 +1,209 @@
 <div align="center">
     <img src="img/logo.png" alt="TikTube Logo" width="200">
-    <h1>TikTube - Video Danmaku Website</h1>
-    <p>A simple video website with bullet comments (danmaku), supports Docker one-click deployment</p>
+    <h1>TikTube - 视频弹幕网站</h1>
+    <p>一个能发弹幕的简单视频网站，支持 Docker 一键部署</p>
     <p>
-        <a href="#-features">Features</a> •
-        <a href="#-quick-start">Quick Start</a> •
-        <a href="#-docker-deployment">Docker Deployment</a> •
-        <a href="#-changelog">Changelog</a>
+        <a href="#-功能特性">功能特性</a> •
+        <a href="#-快速开始">快速开始</a> •
+        <a href="#-docker-部署">Docker 部署</a> •
+        <a href="#-更新日志">更新日志</a>
     </p>
     <p>
-        <a href="README_zh_CN.md">🇨🇳 中文文档</a>
+        <a href="README_EN.md">🇺🇸 English</a>
     </p>
 </div>
 
 ---
 
-## 📖 Introduction
+## 📖 项目简介
 
-TikTube is a YouTube-style video website with danmaku (bullet comments) support. The backend is built with Spring Boot, and the frontend is built with Vue 3 + Vuetify.
+TikTube 是一个仿 YouTube 风格的视频网站，支持弹幕功能。后端基于 Spring Boot，前端基于 Vue 3 + Vuetify。
 
-This repository is a **Docker-optimized version** based on [PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube), featuring:
-- 🐳 Complete Docker multi-stage build support
-- 🔧 Production environment optimizations
-- 📝 Detailed deployment documentation
+本仓库是基于 [PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube) 原项目进行的 **Docker 化改造版本**，主要增加了：
+- 🐳 完整的 Docker 多阶段构建支持
+- 🔧 生产环境优化配置
+- 📝 详细的中文部署文档
 
-> **Acknowledgement**: Special thanks to **[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai)** for creating this excellent open-source project! All modifications in this repository are based on the original project.
-
----
-
-## ✨ Features
-
-- 🎬 **Video Upload** - Upload videos with automatic thumbnail generation
-- 💬 **Danmaku System** - Real-time bullet comments display
-- 📺 **Video Player** - High-performance player based on ArtPlayer
-- 👥 **User System** - Registration, login, TOTP two-factor authentication
-- ❤️ **Interactions** - Like, favorite, comment, subscribe
-- 📊 **Data Management** - Watch history, personal homepage
-- 🤖 **AI Moderation** - Support for LLM-based content moderation
-- 🗄️ **Object Storage** - Support MinIO, Cloudflare R2, and S3-compatible storage
+> **致谢**：感谢原作者 **[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai)** 创建了这个优秀的开源项目！本仓库的所有改动均基于原项目进行。
 
 ---
 
-## 🏗️ Tech Stack
+## ✨ 功能特性
 
-| Module | Technology |
-|--------|------------|
-| Backend | Spring Boot 3.4.4, MyBatis-Plus, JWT |
-| Frontend | Vue 3.5, Vuetify 3, Vite, ArtPlayer |
-| Database | MySQL 8.0 |
-| Cache | Redis 7 |
-| Video Processing | JavaCV, FFmpeg |
-| Containerization | Docker, Docker Compose |
+- 🎬 **视频投稿** - 支持上传视频、自动生成封面截图
+- 💬 **弹幕系统** - 实时弹幕发送与展示
+- 📺 **视频播放** - 基于 ArtPlayer 的高性能播放器
+- 👥 **用户系统** - 注册、登录、TOTP 两步验证
+- ❤️ **互动功能** - 点赞、收藏、评论、订阅
+- 📊 **数据管理** - 播放历史、个人主页
+- 🤖 **AI 审核** - 支持配置大模型自动内容审核
+- 🗄️ **对象存储** - 支持 MinIO、Cloudflare R2 等 S3 兼容存储
 
 ---
 
-## 🚀 Quick Start
+## 🏗️ 技术栈
 
-### Option 1: Docker One-Click Deployment (Recommended)
+| 模块 | 技术 |
+|------|------|
+| 后端 | Spring Boot 3.4.4, MyBatis-Plus, JWT |
+| 前端 | Vue 3.5, Vuetify 3, Vite, ArtPlayer |
+| 数据库 | MySQL 8.0 |
+| 缓存 | Redis 7 |
+| 视频处理 | JavaCV, FFmpeg |
+| 容器化 | Docker, Docker Compose |
+
+---
+
+## 🚀 快速开始
+
+### 方式一：Docker 一键部署（推荐）
 
 ```bash
-# Clone repository
+# 克隆仓库
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 cd TikTube-Docker/docker
 
-# Configure environment variables
+# 修改环境变量
 cp .env.example .env
-nano .env  # Modify passwords and settings
+nano .env  # 修改密码等配置
 
-# Build and start
+# 构建并启动
 docker compose up -d --build
 
-# Access
+# 访问
 open http://localhost:8080
 ```
 
-For detailed instructions, see [Docker Deployment Guide](docker/DOCKER_DEPLOY.md)
+详细教程请查看 [Docker 一键部署文档](docker/DOCKER_DEPLOY.md)
 
-### Option 2: Local Development
+### 方式二：本地开发环境
 
-**Requirements**: Java 17+, Node.js 20+, Maven 3.9+, MySQL 8.0+
+**环境要求**：Java 17+, Node.js 20+, Maven 3.9+, MySQL 8.0+
 
 ```bash
-# Import database
+# 导入数据库
 mysql -u root -p < tik_tube.sql
 
-# Start backend
+# 启动后端
 cd TikTube
 mvn spring-boot:run
 
-# Start frontend
+# 启动前端
 cd TikTubeWeb
 npm install && npm run dev
 
-# Access
+# 访问
 open http://localhost:5173
 ```
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Docker 部署
 
-### Directory Structure
+### 目录结构
 
 ```
 docker/
-├── Dockerfile              # Multi-stage build file
-├── docker-compose.yml      # Service orchestration
-├── .env.example            # Environment variables template
-└── DOCKER_DEPLOY.md        # Detailed deployment guide
+├── Dockerfile              # 多阶段构建文件
+├── docker-compose.yml      # 服务编排
+├── .env.example            # 环境变量模板
+└── DOCKER_DEPLOY.md        # 详细部署教程
 ```
 
-### Quick Commands
+### 快速命令
 
 ```bash
-# Build image
+# 构建镜像
 docker compose build
 
-# Start services
+# 启动服务
 docker compose up -d
 
-# View logs
+# 查看日志
 docker compose logs -f tiktube
 
-# Stop services
+# 停止服务
 docker compose down
 ```
 
-### Services
+### 服务说明
 
-| Service | Port | Description |
-|---------|------|-------------|
-| tiktube | 8080 | Main application |
-| mysql | 3306 | Database |
-| redis | 6379 | Cache |
+| 服务 | 端口 | 说明 |
+|------|------|------|
+| tiktube | 8080 | 主应用 |
+| mysql | 3306 | 数据库 |
+| redis | 6379 | 缓存 |
 
 ---
 
-## 📝 Changelog
+## 📝 更新日志
 
 ### v1.3.0-docker (2026-01-18)
 
-#### 🐳 Docker Optimization
+#### 🐳 Docker 化改造
 
-**1. Multi-stage Dockerfile Build**
-- Stage 1: Node.js 20 compiles Vue frontend
-- Stage 2: Maven 3.9 compiles Spring Boot backend
-- Stage 3: JRE 17 runtime (**Changed from Alpine to Debian** for JavaCV compatibility)
+**1. 多阶段 Dockerfile 构建**
+- 阶段 1：Node.js 20 编译前端 Vue 项目
+- 阶段 2：Maven 3.9 编译后端 Spring Boot 项目
+- 阶段 3：JRE 17 运行环境（**从 Alpine 改为 Debian**，解决 JavaCV 兼容性）
 
-**2. JVM Memory Optimization**
+**2. JVM 内存参数优化**
 ```diff
 - JAVA_OPTS: "-Xms512m -Xmx1024m"
 + JAVA_OPTS: "-Xms2048m -Xmx5120m"
 ```
-- Initial heap: 512MB → 2GB
-- Max heap: 1GB → 5GB
-- Fixes `OutOfMemoryError` when processing large video files (1GB+)
+- 初始堆内存：512MB → 2GB
+- 最大堆内存：1GB → 5GB
+- 解决大文件（1GB+）视频处理时的 `OutOfMemoryError`
 
-**3. Runtime Image Change**
+**3. 运行时镜像修改**
 ```diff
 - FROM eclipse-temurin:17-jre-alpine  # musl libc
 + FROM eclipse-temurin:17-jre         # glibc
 ```
-- Fixes `SIGSEGV` crash during video processing with JavaCV
-- Reason: Alpine uses musl libc, which is incompatible with JavaCV native libraries
+- 修复 JavaCV 视频处理时的 `SIGSEGV` 段错误
+- 原因：Alpine 使用 musl libc，与 JavaCV native 库不兼容
 
-**4. Frontend Enhancement**
-- Added [VideoTogether](https://videotogether.github.io/) watch-together plugin
+**4. 前端增强**
+- 添加 [VideoTogether](https://videotogether.github.io/) 一起看插件
 
-**5. Database Script Fix**
-- Fixed syntax errors in `tik_tube.sql` (missing semicolons, trailing commas)
+**5. 数据库脚本修复**
+- 修复 `tik_tube.sql` 中的语法错误（缺少分号、尾部逗号）
 
-#### 📁 New Files
+#### 📁 新增文件
 
-| File | Description |
-|------|-------------|
-| `docker/Dockerfile` | Multi-stage build file |
-| `docker/docker-compose.yml` | Service orchestration |
-| `docker/.env.example` | Environment variables template |
-| `docker/DOCKER_DEPLOY.md` | Detailed deployment guide |
-
----
-
-## ⚠️ Known Limitations
-
-1. **Large File Upload**: Videos larger than 2-3GB may fail to process. Consider compressing first.
-2. **MKV Format**: Some MKV files (especially with FLAC audio) may fail to parse. Convert to MP4 recommended.
+| 文件 | 说明 |
+|------|------|
+| `docker/Dockerfile` | 多阶段构建文件 |
+| `docker/docker-compose.yml` | 服务编排 |
+| `docker/.env.example` | 环境变量模板 |
+| `docker/DOCKER_DEPLOY.md` | 详细部署教程 |
 
 ---
 
-## 🙏 Acknowledgements
+## ⚠️ 已知限制
 
-- **Original Author**: [PuZhiweizuishuai](https://github.com/PuZhiweizuishuai) - Created the excellent TikTube video website project
-- **Original Repository**: [https://github.com/PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube)
-
-This repository is a Docker-optimized version based on v1.3.0. All core functionality credits go to the original author.
+1. **大文件上传**：超过 2-3GB 的视频可能无法处理，建议先压缩
+2. **MKV 格式**：部分 MKV 文件（特别是 FLAC 音轨）可能无法解析，建议转为 MP4
 
 ---
 
-## 📄 License
+## 🙏 致谢
 
-This project is licensed under the [MIT License](LICENSE)
+- **原项目作者**：[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai) - 创建了 TikTube 这个优秀的开源视频网站项目
+- **原项目地址**：[https://github.com/PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube)
+
+本仓库基于原项目 v1.3.0 版本进行 Docker 化改造，所有核心功能归功于原作者。
+
+---
+
+## 📄 许可证
+
+本项目遵循 [MIT License](LICENSE)
 
 ---
 
 <div align="center">
-    <p>If this project helps you, please give the original project a ⭐ Star!</p>
-    <a href="https://github.com/PuZhiweizuishuai/TikTube">👉 Original Project</a>
+    <p>如果这个项目对你有帮助，请给原项目一个 ⭐ Star！</p>
+    <a href="https://github.com/PuZhiweizuishuai/TikTube">👉 原项目地址</a>
 </div>
