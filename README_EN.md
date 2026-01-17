@@ -9,64 +9,136 @@
 
 ---
 
-## 🚀 Quick Deployment (3 Steps)
+# 🚀 Deployment Tutorial (Beginner Friendly)
 
-### 1️⃣ Clone Repository
+Follow these steps and deploy in 5 minutes.
 
+---
+
+## Step 1: Install Docker
+
+If you haven't installed Docker yet:
+
+- **Windows**: Download [Docker Desktop](https://www.docker.com/products/docker-desktop/), install and start it
+- **macOS**: Download [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- **Linux**:
+```bash
+curl -fsSL https://get.docker.com | sh
+sudo systemctl start docker
+```
+
+Verify installation:
+```bash
+docker --version
+```
+
+---
+
+## Step 2: Download This Project
+
+**Option A: Using Git**
 ```bash
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 cd TikTube-Docker/docker
 ```
 
-### 2️⃣ Configure Environment
+**Option B: Download ZIP**
+1. Click the green **Code** button above
+2. Select **Download ZIP**
+3. Extract and navigate to `TikTube-Docker-main/docker` folder
+
+---
+
+## Step 3: Set Passwords
+
+Open the `docker` folder, you'll find a `.env.example` file.
+
+### Windows Users:
+```powershell
+copy .env.example .env
+notepad .env
+```
+
+### macOS/Linux Users:
+```bash
+cp .env.example .env
+nano .env   # or vim .env
+```
+
+### Edit .env File
+
+You'll see these contents:
 
 ```bash
-# Linux/macOS
-cp .env.example .env
-vim .env  # Edit passwords
+# MySQL database password - change to your own password!
+MYSQL_ROOT_PASSWORD=TikTube@2024!
 
-# Windows PowerShell
-copy .env.example .env
-notepad .env  # Edit passwords with Notepad
+# Redis cache password - change to your own password!
+REDIS_PASSWORD=TikTube@Redis2024!
 ```
 
-⚠️ **Must modify** passwords in `.env`:
-```
-MYSQL_ROOT_PASSWORD=your_mysql_password
-REDIS_PASSWORD=your_redis_password
+**Simply change these two passwords**, for example:
+```bash
+MYSQL_ROOT_PASSWORD=MySecurePass123
+REDIS_PASSWORD=MyRedisPass456
 ```
 
-### 3️⃣ Start Services
+> 💡 **Note**: These passwords are set by YOU. Docker will automatically use these passwords to create MySQL and Redis. No need to install databases separately - Docker handles everything!
+
+**Save the file** after editing.
+
+---
+
+## Step 4: Start Services
+
+Open terminal in the `docker` folder and run:
 
 ```bash
 docker compose up -d --build
 ```
 
-> First build takes about 5-10 minutes
+**First run takes 5-10 minutes** (downloading images + compiling code)
 
-### ✅ Access Website
-
-Open browser: **http://localhost:8080**
-
-> 📌 **Tip**: Register with username `admin` to become administrator
+You'll see output like this when successful:
+```
+✔ Container tiktube-mysql   Started
+✔ Container tiktube-redis   Started
+✔ Container tiktube-app     Started
+```
 
 ---
 
-## ❓ Troubleshooting
+## Step 5: Access Website
 
-### Docker Image Pull Failed
+Open your browser and visit:
 
-If you see `failed to fetch anonymous token` error, it's a Docker Hub network issue.
+👉 **http://localhost:8080**
 
-**Solution**: Configure Docker registry mirror
+### Register Admin Account
 
-<details>
-<summary>📖 Click to expand configuration</summary>
+On first visit:
+1. Click **Register**
+2. **Username: `admin`** (This is important!)
+3. Complete registration
 
-#### Windows Docker Desktop
-1. Right-click Docker icon in system tray → Settings
-2. Select Docker Engine
-3. Add configuration:
+> ⚠️ The first account with username `admin` automatically becomes administrator!
+
+---
+
+# ❓ Troubleshooting
+
+## Issue 1: Docker Image Pull Failed
+
+Error: `failed to fetch anonymous token` or `timeout`
+
+**Cause**: Cannot access Docker Hub (common in China)
+
+**Solution**: Configure registry mirror
+
+### Windows Docker Desktop
+1. Right-click Docker icon in system tray → **Settings**
+2. Select **Docker Engine** on the left
+3. Add to JSON config:
 ```json
 {
   "registry-mirrors": [
@@ -75,9 +147,10 @@ If you see `failed to fetch anonymous token` error, it's a Docker Hub network is
   ]
 }
 ```
-4. Click Apply & restart
+4. Click **Apply & restart**
+5. Run `docker compose up -d --build` again
 
-#### Linux
+### Linux
 ```bash
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<EOF
@@ -89,63 +162,70 @@ sudo tee /etc/docker/daemon.json <<EOF
 }
 EOF
 sudo systemctl restart docker
-```
-
-</details>
-
-### Video Upload Failed
-
-- **Large files (2GB+)**: Compress video first
-- **MKV format**: Convert to MP4 recommended
-
----
-
-## 📁 Project Structure
-
-```
-TikTube-Docker/
-├── docker/
-│   ├── Dockerfile           # Multi-stage build
-│   ├── docker-compose.yml   # Service orchestration
-│   ├── .env.example         # Environment template
-│   └── DOCKER_DEPLOY.md     # Detailed guide
-├── TikTube/                  # Backend (Spring Boot)
-├── TikTubeWeb/               # Frontend (Vue 3)
-└── tik_tube.sql              # Database script
+# Run again
+docker compose up -d --build
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## Issue 2: Port Already in Use
 
-| Component | Technology |
-|-----------|------------|
-| Backend | Spring Boot 3.4, MyBatis-Plus |
-| Frontend | Vue 3.5, Vuetify 3, Vite |
-| Database | MySQL 8.0, Redis 7 |
-| Video | JavaCV, FFmpeg |
+Error: `port 8080 already in use`
 
----
+**Solution**: Change port in `docker-compose.yml`:
+```yaml
+ports:
+  - "9000:8080"  # Change 8080 to 9000 or another port
+```
 
-## 📝 Changelog
-
-### v1.3.0-docker
-
-- 🐳 Docker multi-stage build
-- ⚙️ JVM memory: 1GB → 5GB
-- 🔧 JavaCV compatibility (Alpine → Debian)
-- ✨ VideoTogether plugin
+Then visit http://localhost:9000
 
 ---
 
-## 🙏 Acknowledgements
+## Issue 3: Video Upload Failed
 
-Based on [PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube).
-
-Thanks to **[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai)** for creating this project!
+- **Large files (over 2GB)**: Compress video first
+- **MKV format**: Convert to MP4
 
 ---
 
-## 📄 License
+# 📁 Project Structure
+
+| Directory/File | Description |
+|----------------|-------------|
+| `docker/` | Docker configuration files |
+| `TikTube/` | Backend code (Spring Boot) |
+| `TikTubeWeb/` | Frontend code (Vue 3) |
+| `tik_tube.sql` | Database script (auto-executed) |
+
+---
+
+# 🛠️ Common Commands
+
+```bash
+# Check status
+docker compose ps
+
+# View logs
+docker compose logs -f tiktube
+
+# Stop services
+docker compose down
+
+# Restart services
+docker compose restart
+```
+
+---
+
+# 🙏 Acknowledgements
+
+This project is based on [PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube) with Docker optimization.
+
+Thanks to **[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai)** for creating this excellent open-source project!
+
+---
+
+# 📄 License
 
 [MIT License](LICENSE)
