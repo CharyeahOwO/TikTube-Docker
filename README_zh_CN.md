@@ -1,173 +1,209 @@
 <div align="center">
-    <img src="/img/logo.png" alt="logo" title="logo" width="50%" style="text-align:center;">
+    <img src="img/logo.png" alt="TikTube Logo" width="200">
+    <h1>TikTube - 视频弹幕网站</h1>
+    <p>一个能发弹幕的简单视频网站，支持 Docker 一键部署</p>
+    <p>
+        <a href="#-功能特性">功能特性</a> •
+        <a href="#-快速开始">快速开始</a> •
+        <a href="#-docker-部署">Docker 部署</a> •
+        <a href="#-更新日志">更新日志</a>
+    </p>
+    <p>
+        <a href="README.md">🇺🇸 English</a>
+    </p>
 </div>
+
+---
+
+## 📖 项目简介
+
+TikTube 是一个仿 YouTube 风格的视频网站，支持弹幕功能。后端基于 Spring Boot，前端基于 Vue 3 + Vuetify。
+
+本仓库是基于 [PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube) 原项目进行的 **Docker 化改造版本**，主要增加了：
+- 🐳 完整的 Docker 多阶段构建支持
+- 🔧 生产环境优化配置
+- 📝 详细的中文部署文档
+
+> **致谢**：感谢原作者 **[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai)** 创建了这个优秀的开源项目！本仓库的所有改动均基于原项目进行。
+
+---
+
+## ✨ 功能特性
+
+- 🎬 **视频投稿** - 支持上传视频、自动生成封面截图
+- 💬 **弹幕系统** - 实时弹幕发送与展示
+- 📺 **视频播放** - 基于 ArtPlayer 的高性能播放器
+- 👥 **用户系统** - 注册、登录、TOTP 两步验证
+- ❤️ **互动功能** - 点赞、收藏、评论、订阅
+- 📊 **数据管理** - 播放历史、个人主页
+- 🤖 **AI 审核** - 支持配置大模型自动内容审核
+- 🗄️ **对象存储** - 支持 MinIO、Cloudflare R2 等 S3 兼容存储
+
+---
+
+## 🏗️ 技术栈
+
+| 模块 | 技术 |
+|------|------|
+| 后端 | Spring Boot 3.4.4, MyBatis-Plus, JWT |
+| 前端 | Vue 3.5, Vuetify 3, Vite, ArtPlayer |
+| 数据库 | MySQL 8.0 |
+| 缓存 | Redis 7 |
+| 视频处理 | JavaCV, FFmpeg |
+| 容器化 | Docker, Docker Compose |
+
+---
+
+## 🚀 快速开始
+
+### 方式一：Docker 一键部署（推荐）
+
+```bash
+# 克隆仓库
+git clone https://github.com/CharyeahOwO/TikTube-Docker.git
+cd TikTube-Docker/docker
+
+# 修改环境变量
+cp .env.example .env
+nano .env  # 修改密码等配置
+
+# 构建并启动
+docker compose up -d --build
+
+# 访问
+open http://localhost:8080
+```
+
+详细教程请查看 [Docker 一键部署文档](docker/DOCKER_DEPLOY.md)
+
+### 方式二：本地开发环境
+
+**环境要求**：Java 17+, Node.js 20+, Maven 3.9+, MySQL 8.0+
+
+```bash
+# 导入数据库
+mysql -u root -p < tik_tube.sql
+
+# 启动后端
+cd TikTube
+mvn spring-boot:run
+
+# 启动前端
+cd TikTubeWeb
+npm install && npm run dev
+
+# 访问
+open http://localhost:5173
+```
+
+---
+
+## 🐳 Docker 部署
+
+### 目录结构
+
+```
+docker/
+├── Dockerfile              # 多阶段构建文件
+├── docker-compose.yml      # 服务编排
+├── .env.example            # 环境变量模板
+└── DOCKER_DEPLOY.md        # 详细部署教程
+```
+
+### 快速命令
+
+```bash
+# 构建镜像
+docker compose build
+
+# 启动服务
+docker compose up -d
+
+# 查看日志
+docker compose logs -f tiktube
+
+# 停止服务
+docker compose down
+```
+
+### 服务说明
+
+| 服务 | 端口 | 说明 |
+|------|------|------|
+| tiktube | 8080 | 主应用 |
+| mysql | 3306 | 数据库 |
+| redis | 6379 | 缓存 |
+
+---
+
+## 📝 更新日志
+
+### v1.3.0-docker (2026-01-18)
+
+#### 🐳 Docker 化改造
+
+**1. 多阶段 Dockerfile 构建**
+- 阶段 1：Node.js 20 编译前端 Vue 项目
+- 阶段 2：Maven 3.9 编译后端 Spring Boot 项目
+- 阶段 3：JRE 17 运行环境（**从 Alpine 改为 Debian**，解决 JavaCV 兼容性）
+
+**2. JVM 内存参数优化**
+```diff
+- JAVA_OPTS: "-Xms512m -Xmx1024m"
++ JAVA_OPTS: "-Xms2048m -Xmx5120m"
+```
+- 初始堆内存：512MB → 2GB
+- 最大堆内存：1GB → 5GB
+- 解决大文件（1GB+）视频处理时的 `OutOfMemoryError`
+
+**3. 运行时镜像修改**
+```diff
+- FROM eclipse-temurin:17-jre-alpine  # musl libc
++ FROM eclipse-temurin:17-jre         # glibc
+```
+- 修复 JavaCV 视频处理时的 `SIGSEGV` 段错误
+- 原因：Alpine 使用 musl libc，与 JavaCV native 库不兼容
+
+**4. 前端增强**
+- 添加 [VideoTogether](https://videotogether.github.io/) 一起看插件
+
+**5. 数据库脚本修复**
+- 修复 `tik_tube.sql` 中的语法错误（缺少分号、尾部逗号）
+
+#### 📁 新增文件
+
+| 文件 | 说明 |
+|------|------|
+| `docker/Dockerfile` | 多阶段构建文件 |
+| `docker/docker-compose.yml` | 服务编排 |
+| `docker/.env.example` | 环境变量模板 |
+| `docker/DOCKER_DEPLOY.md` | 详细部署教程 |
+
+---
+
+## ⚠️ 已知限制
+
+1. **大文件上传**：超过 2-3GB 的视频可能无法处理，建议先压缩
+2. **MKV 格式**：部分 MKV 文件（特别是 FLAC 音轨）可能无法解析，建议转为 MP4
+
+---
+
+## 🙏 致谢
+
+- **原项目作者**：[PuZhiweizuishuai](https://github.com/PuZhiweizuishuai) - 创建了 TikTube 这个优秀的开源视频网站项目
+- **原项目地址**：[https://github.com/PuZhiweizuishuai/TikTube](https://github.com/PuZhiweizuishuai/TikTube)
+
+本仓库基于原项目 v1.3.0 版本进行 Docker 化改造，所有核心功能归功于原作者。
+
+---
+
+## 📄 许可证
+
+本项目遵循 [MIT License](LICENSE)
+
+---
 
 <div align="center">
-    <a href="/README.md">English</a>
+    <p>如果这个项目对你有帮助，请给原项目一个 ⭐ Star！</p>
+    <a href="https://github.com/PuZhiweizuishuai/TikTube">👉 原项目地址</a>
 </div>
-
-# TikTube 一个能发弹幕的简单的视频网站
-
-
-## 简介 
-
-一个简单的视频网站
-
-网站名称是 TikTok 与 YouTube 的缝合，Logo 为豆包 AI 生成
-
-主要界面参考了 [Youtube](https://www.youtube.com/)，部分功能借鉴了 [哔哩哔哩](https://www.bilibili.com/)
-
-后端 Spring Boot， MySQL
-
-前端 Vue， Vuetifyjs
-
-已经完成所有核心功能，比如：
-
-- 视频投稿
-- 弹幕
-- 视频播放
-- 播放历史，收藏，评论，点赞
-- 自动生成封面图
-- 数据管理
-- 登录 TOTP 两步验证
-- 配置多存储库，支持兼容 S3 API 的对象存储已测试：MinIO，Cloudflare R2- 
-- 举报，内容审核（配置大模型后可以实现AI自动内容审核）
-- 公告，消息通知等
-
-还剩一些细节功能在逐渐优化中
-
-为了使用与部署方便，唯一外部依赖只有数据库，可选配置为 Redis
-
-通过设置 `application.yml` 中 `open-redis` 选项为 true，开启 Redis 缓存
-
-
-## 在线体验
-
-关于在线 DEMO: [https://tiktube.buguagaoshu.com/](https://tiktube.buguagaoshu.com/)
-
-*该 DEMO 该版本仅为展示系统，故管理员关闭了普通用户的投稿，评论功能，如需要体验这两功能，请自行部署体验！*
-
-测试账号为：test@test.com
-
-密码：test123456test
-
-**另外，你也可以注册自己的账号体验**
-
-**另外，由于该 DEMO 套了 Cloudflare 的 CDN，国内访问速度可能较慢速，请耐心等待！如果有条件可以使用 [CloudflareSpeedTest](https://github.com/XIU2/CloudflareSpeedTest) 配置 Cloudflare 优选 IP，提升访问速度！😂😂😂**
-
-PS：使用 CloudflareSpeedTest 修改 HOST，除了要改 tiktube.buguagaoshu.com 的HOST 外，还需要修改 img.buguagaoshu.com 的 HOST，因为线上版本的 TikTube 文件视频文件都存储在 Cloudflare 的 R2 对象存储上
-
-
-## 视频演示
-
-
-哔哩哔哩：<a href="https://www.bilibili.com/video/BV1AV59z5ESV" target="_blank">https://www.bilibili.com/video/BV1AV59z5ESV</a>
-
-
-## 截图
-
-### 主页 
-
-<img src="/img/home.png" title="首页" alt="首页">
-
-### 播放页
-
-<img src="/img/video.png" title="播放页" alt="播放页">
-
-### 评论
-
-<img src="/img/comment.png" title="评论" alt="评论">
-
-### 播放历史
-
-<img src="/img/history.png" title="历史记录" alt="历史记录">
-
-### 订阅
-
-<img src="/img/subscribe.png" title="订阅" alt="订阅">
-
-### 用户主页
-
-<img src="/img/user.png" title="个人主页" alt="个人主页">
-
-### 消息通知
-
-<img src="/img/notification.png" title="消息通知" alt="消息通知">
-
-### 投稿
-
-<img src="/img/publish.png" title="投稿" alt="投稿">
-
-#### 稿件自动截图
-
-<img src="/img/Capture.png" title="视频自动截图" alt="视频自动截图">
-
-### ADMIN
-
-<img src="/img/admin.png" title="ADMIN" alt="ADMIN">
-
-### AI 大模型自动内容审核
-
-<img src="/img/ai.png" title="AI 大模型自动内容审核" alt="AI 大模型自动内容审核">
-
-
-## 快速运行
-
-**运行环境: Java17+, Node 20+, Maven 3.9+， MySQL 8.0+**
-
-使用 tik_tube.sql 创建数据库，配置数据库地址
-
-如果你有 Reids 服务，可以通过设置 `application.yml` 中 `open-redis` 选项为 true，此时系统将使用 Redis 缓存
-
-该选项默认为 false，使用系统缓存
-
-**运行后端服务**
-
-```bash
-cd TikTube
-mvn clean package
-```
-
-**之后**
-
-```bash
-java -jar target/tiktube-*
-```
-
-**运行前端服务**
-
-```bash
-cd TikTubeWeb
-npm install
-```
-
-**之后**
-
-```bash
-npm run dev
-```
-
-
-**最后打开**
-
-
-```
-http://127.0.0.1:5173
-```
-
-**提示：** 第一个以admin为用户名注册的用户将自动成为管理员！
-
-
-**关闭服务器之间请先到管理后台同步缓存数据，避免数据丢失！**
-
-
-## 更新
-
-[更新日志](/CHANGELOG.md)
-
-
-## 其它地址
-
-GitHub：https://github.com/PuZhiweizuishuai/TikTube
-
-码云: https://gitee.com/puzhiweizuishuai/VideoWeb
