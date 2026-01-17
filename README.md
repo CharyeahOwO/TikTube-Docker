@@ -3,10 +3,10 @@
     <h1>TikTube - 视频弹幕网站</h1>
     <p>一个能发弹幕的简单视频网站，支持 Docker 一键部署</p>
     <p>
-        <a href="#功能特性">功能特性</a> •
-        <a href="#快速开始">快速开始</a> •
-        <a href="#docker-部署">Docker 部署</a> •
-        <a href="#更新日志">更新日志</a>
+        <a href="#-功能特性">功能特性</a> •
+        <a href="#-快速开始">快速开始</a> •
+        <a href="#-docker-部署">Docker 部署</a> •
+        <a href="#-更新日志">更新日志</a>
     </p>
 </div>
 
