@@ -15,7 +15,7 @@
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 cd TikTube-Docker/docker
 
-#n Linux/Mac OS
+# Linux/Mac OS
 cp .env.example .env
 # Windows
 copy .env.example .env
