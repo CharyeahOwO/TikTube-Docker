@@ -15,7 +15,12 @@
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 cd TikTube-Docker/docker
 
-cp .env.example .env    # 编辑 .env 修改密码
+#linux/macos
+cp .env.example .env
+#windows
+copy .env.example .env
+# 编辑 .env 修改密码
+#开始构建
 docker compose up -d --build
 
 # 访问 http://localhost:8080
