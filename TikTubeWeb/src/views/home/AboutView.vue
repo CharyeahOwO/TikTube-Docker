@@ -59,7 +59,7 @@
       </v-card-title>
       <v-card-text class="pa-6">
         <p class="text-body-1 mb-4">
-          TikTube是一个开源项目，我们欢迎开发者参与贡献，共同改进这个平台。您可以通过以下链接访问我们的代码仓库：
+          本项目是基于原项目进行 Docker 化改造的版本，欢迎访问我们的代码仓库：
         </p>
 
         <v-list>
@@ -69,36 +69,14 @@
                 <v-icon color="black">mdi-github</v-icon>
               </v-avatar>
             </template>
-            <v-list-item-title class="text-subtitle-1 font-weight-medium">GitHub</v-list-item-title>
+            <v-list-item-title class="text-subtitle-1 font-weight-medium">GitHub (Docker 版本)</v-list-item-title>
             <v-list-item-subtitle>
               <a
-                href="https://github.com/PuZhiweizuishuai/TikTube"
+                href="https://github.com/CharyeahOwO/TikTube-Docker"
                 target="_blank"
                 class="text-decoration-none"
               >
-                https://github.com/PuZhiweizuishuai/TikTube
-              </a>
-            </v-list-item-subtitle>
-          </v-list-item>
-
-          <v-divider class="my-3"></v-divider>
-
-          <v-list-item>
-            <template v-slot:prepend>
-              <v-avatar color="grey-lighten-3" size="36">
-                <v-icon color="red">mdi-source-branch</v-icon>
-              </v-avatar>
-            </template>
-            <v-list-item-title class="text-subtitle-1 font-weight-medium"
-              >码云 Gitee</v-list-item-title
-            >
-            <v-list-item-subtitle>
-              <a
-                href="https://gitee.com/puzhiweizuishuai/VideoWeb"
-                target="_blank"
-                class="text-decoration-none"
-              >
-                https://gitee.com/puzhiweizuishuai/VideoWeb
+                https://github.com/CharyeahOwO/TikTube-Docker
               </a>
             </v-list-item-subtitle>
           </v-list-item>
@@ -129,6 +107,7 @@
               <v-chip color="success" variant="outlined" class="ma-1">Spring Boot</v-chip>
               <v-chip color="success" variant="outlined" class="ma-1">MyBatis</v-chip>
               <v-chip color="success" variant="outlined" class="ma-1">MySQL</v-chip>
+              <v-chip color="success" variant="outlined" class="ma-1">Docker</v-chip>
             </v-chip-group>
           </v-col>
         </v-row>
@@ -136,7 +115,7 @@
     </v-card>
 
     <!-- 联系我们区域 -->
-    <v-card class="rounded-lg" elevation="2">
+    <v-card class="mb-8 rounded-lg" elevation="2">
       <v-card-title class="text-h5 font-weight-bold py-4 px-6 bg-info text-white">
         <v-icon icon="mdi-email" class="mr-2"></v-icon>
         联系我们
@@ -149,33 +128,60 @@
           <v-icon color="primary" class="mr-3">mdi-github</v-icon>
           <span class="text-body-1">GitHub Issues: </span>
           <a
-            href="https://github.com/PuZhiweizuishuai/TikTube/issues"
+            href="https://github.com/CharyeahOwO/TikTube-Docker/issues"
             target="_blank"
             class="text-decoration-none ml-2"
           >
             提交问题或建议
           </a>
         </div>
-        <div class="d-flex align-center">
-          <v-icon color="red" class="mr-3">mdi-gitee</v-icon>
-          <span class="text-body-1">码云 Issues: </span>
+        <div class="d-flex align-center mb-3">
+          <v-icon color="red" class="mr-3">mdi-email</v-icon>
+          <span class="text-body-1">邮箱: </span>
           <a
-            href="https://gitee.com/puzhiweizuishuai/VideoWeb/issues"
+            href="mailto:2971087216@qq.com"
             class="text-decoration-none ml-2"
           >
-            提交问题或建议
+            2971087216@qq.com
           </a>
         </div>
+      </v-card-text>
+    </v-card>
+
+    <!-- 原作者致谢区域 -->
+    <v-card class="mb-8 rounded-lg" elevation="2">
+      <v-card-title class="text-h5 font-weight-bold py-4 px-6 bg-warning">
+        <v-icon icon="mdi-heart" class="mr-2"></v-icon>
+        原作者致谢
+      </v-card-title>
+      <v-card-text class="pa-6">
+        <p class="text-body-1 mb-4">
+          本项目基于 <strong>PuZhiweizuishuai</strong> 的 TikTube 项目进行 Docker 化改造，在此特别感谢原作者的辛勤付出！
+        </p>
+        <div class="d-flex align-center mb-3">
+          <v-icon color="black" class="mr-3">mdi-github</v-icon>
+          <span class="text-body-1">原项目地址: </span>
+          <a
+            href="https://github.com/PuZhiweizuishuai/TikTube"
+            target="_blank"
+            class="text-decoration-none ml-2"
+          >
+            https://github.com/PuZhiweizuishuai/TikTube
+          </a>
+        </div>
+        <v-alert type="warning" variant="tonal" class="mt-4">
+          <strong>⚠️ 重要提示：</strong> 本项目为 Docker 改造版本，如遇问题请在本仓库提交 Issue，<strong>请勿向原作者仓库提交 Issues</strong>，以免给原作者带来困扰。
+        </v-alert>
       </v-card-text>
     </v-card>
 
     <!-- 页脚版权信息 -->
     <div class="text-center mt-8 text-body-2 text-medium-emphasis">
       <p>
-        <a href="https://www.buguagaoshu.com" target="_blank"><strong>不挂高数</strong> </a> ©2020 -
+        <a href="https://mulingowo.cn/" target="_blank"><strong>拾光物语</strong></a> ©2020 -
         {{ new Date().getFullYear() }}
       </p>
-      <p>version: 1.3.0 2025-06-02</p>
+      <p>version: 1.3.1-docker 2026-01-18</p>
     </div>
   </v-container>
 </template>
