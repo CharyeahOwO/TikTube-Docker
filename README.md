@@ -11,24 +11,34 @@
 
 ## 快速开始
 
+1. 克隆项目：
 ```bash
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 ```
 
+2. 进入 docker 目录：
 ```bash
 cd TikTube-Docker/docker
 ```
 
+3. 复制环境变量配置文件：
+
+**Linux/Mac OS:**
 ```bash
-cp .env.example .env    # 编辑 .env 修改密码
+cp .env.example .env
 ```
 
+**Windows:**
+```bash
+copy .env.example .env
+```
+
+4. 编辑 .env 修改密码后，开始构建：
 ```bash
 docker compose up -d --build
 ```
 
-访问 http://localhost:8080
-> 注册用户名 `admin` 成为管理员
+5. 访问 `http://localhost:8080`，注册用户名 `admin` 成为管理员
 
 ---
 
@@ -68,52 +78,49 @@ docker compose up -d --build
 
 ## 常见问题
 
-<details>
-<summary><b>Docker 拉取镜像失败</b></summary>
+### Docker 拉取镜像失败
 
-配置镜像加速：
-
+配置镜像加速（Linux）：
 ```bash
-# Linux
 sudo tee /etc/docker/daemon.json <<EOF
 {"registry-mirrors": ["https://docker.1panel.live"]}
 EOF
 ```
 
+重启 Docker 服务：
 ```bash
 sudo systemctl restart docker
 ```
 
-Windows: Docker Desktop → Settings → Docker Engine → 添加 `registry-mirrors`
+**Windows:** Docker Desktop → Settings → Docker Engine → 添加 `registry-mirrors`
 
-</details>
-
-<details>
-<summary><b>大文件上传失败</b></summary>
+### 大文件上传失败
 
 - 超过 2GB 的视频建议先压缩
 - MKV 格式建议转换为 MP4
-
-</details>
 
 ---
 
 ## 常用命令
 
+查看状态：
 ```bash
-docker compose ps          # 查看状态
+docker compose ps
 ```
 
+查看日志：
 ```bash
-docker compose logs -f     # 查看日志
+docker compose logs -f
 ```
 
+停止服务：
 ```bash
-docker compose down        # 停止服务
+docker compose down
 ```
 
+重启服务：
 ```bash
-docker compose restart     # 重启服务
+docker compose restart
 ```
 
 ---

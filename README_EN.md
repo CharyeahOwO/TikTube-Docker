@@ -11,24 +11,34 @@
 
 ## Quick Start
 
+1. Clone the project:
 ```bash
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
 ```
 
+2. Enter docker directory:
 ```bash
 cd TikTube-Docker/docker
 ```
 
+3. Copy environment config file:
+
+**Linux/Mac OS:**
 ```bash
-cp .env.example .env    # Edit .env to change passwords
+cp .env.example .env
 ```
 
+**Windows:**
+```bash
+copy .env.example .env
+```
+
+4. Edit .env to change passwords, then build:
 ```bash
 docker compose up -d --build
 ```
 
-Visit http://localhost:8080
-> Register with username `admin` to become administrator
+5. Visit `http://localhost:8080`, register with username `admin` to become administrator
 
 ---
 
@@ -68,52 +78,49 @@ Visit http://localhost:8080
 
 ## Troubleshooting
 
-<details>
-<summary><b>Docker image pull failed</b></summary>
+### Docker image pull failed
 
-Configure registry mirror:
-
+Configure registry mirror (Linux):
 ```bash
-# Linux
 sudo tee /etc/docker/daemon.json <<EOF
 {"registry-mirrors": ["https://docker.1panel.live"]}
 EOF
 ```
 
+Restart Docker service:
 ```bash
 sudo systemctl restart docker
 ```
 
-Windows: Docker Desktop → Settings → Docker Engine → Add `registry-mirrors`
+**Windows:** Docker Desktop → Settings → Docker Engine → Add `registry-mirrors`
 
-</details>
-
-<details>
-<summary><b>Large file upload failed</b></summary>
+### Large file upload failed
 
 - Videos over 2GB: compress first
 - MKV format: convert to MP4
-
-</details>
 
 ---
 
 ## Common Commands
 
+Check status:
 ```bash
-docker compose ps          # Check status
+docker compose ps
 ```
 
+View logs:
 ```bash
-docker compose logs -f     # View logs
+docker compose logs -f
 ```
 
+Stop services:
 ```bash
-docker compose down        # Stop services
+docker compose down
 ```
 
+Restart services:
 ```bash
-docker compose restart     # Restart services
+docker compose restart
 ```
 
 ---
