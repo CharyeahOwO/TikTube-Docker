@@ -13,19 +13,22 @@
 
 ```bash
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
-cd TikTube-Docker/docker
-
-# Linux/Mac OS
-cp .env.example .env
-# Windows
-copy .env.example .env
-# 编辑 .env 修改密码
-# 开始构建
-docker compose up -d --build
-
-# 访问 http://localhost:8080
-# 注册用户名 admin 成为管理员
 ```
+
+```bash
+cd TikTube-Docker/docker
+```
+
+```bash
+cp .env.example .env    # 编辑 .env 修改密码
+```
+
+```bash
+docker compose up -d --build
+```
+
+访问 http://localhost:8080
+> 注册用户名 `admin` 成为管理员
 
 ---
 
@@ -75,6 +78,9 @@ docker compose up -d --build
 sudo tee /etc/docker/daemon.json <<EOF
 {"registry-mirrors": ["https://docker.1panel.live"]}
 EOF
+```
+
+```bash
 sudo systemctl restart docker
 ```
 
@@ -96,8 +102,17 @@ Windows: Docker Desktop → Settings → Docker Engine → 添加 `registry-mirr
 
 ```bash
 docker compose ps          # 查看状态
+```
+
+```bash
 docker compose logs -f     # 查看日志
+```
+
+```bash
 docker compose down        # 停止服务
+```
+
+```bash
 docker compose restart     # 重启服务
 ```
 

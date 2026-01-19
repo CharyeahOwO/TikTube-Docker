@@ -13,14 +13,22 @@
 
 ```bash
 git clone https://github.com/CharyeahOwO/TikTube-Docker.git
-cd TikTube-Docker/docker
-
-cp .env.example .env    # Edit .env to change passwords
-docker compose up -d --build
-
-# Visit http://localhost:8080
-# Register with username 'admin' to become administrator
 ```
+
+```bash
+cd TikTube-Docker/docker
+```
+
+```bash
+cp .env.example .env    # Edit .env to change passwords
+```
+
+```bash
+docker compose up -d --build
+```
+
+Visit http://localhost:8080
+> Register with username `admin` to become administrator
 
 ---
 
@@ -70,6 +78,9 @@ Configure registry mirror:
 sudo tee /etc/docker/daemon.json <<EOF
 {"registry-mirrors": ["https://docker.1panel.live"]}
 EOF
+```
+
+```bash
 sudo systemctl restart docker
 ```
 
@@ -91,8 +102,17 @@ Windows: Docker Desktop → Settings → Docker Engine → Add `registry-mirrors
 
 ```bash
 docker compose ps          # Check status
+```
+
+```bash
 docker compose logs -f     # View logs
+```
+
+```bash
 docker compose down        # Stop services
+```
+
+```bash
 docker compose restart     # Restart services
 ```
 

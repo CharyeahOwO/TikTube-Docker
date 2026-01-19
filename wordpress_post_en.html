@@ -1,0 +1,142 @@
+<div style="text-align: center;">
+    <img src="https://your-image-host/logo.png" alt="TikTube Logo" width="200">
+    <h1>TikTube</h1>
+    <p>Video Danmaku Website | Docker One-Click Deploy</p>
+    <p><a href="https://github.com/CharyeahOwO/TikTube-Docker" target="_blank">GitHub: TikTube-Docker</a></p>
+</div>
+
+<hr>
+
+<h2>Quick Start</h2>
+
+<p>1. Clone the repository:</p>
+<pre><code>git clone https://github.com/CharyeahOwO/TikTube-Docker.git</code></pre>
+
+<p>2. Enter the docker directory:</p>
+<pre><code>cd TikTube-Docker/docker</code></pre>
+
+<p>3. Copy the environment configuration file:</p>
+<pre><code>cp .env.example .env</code></pre>
+
+<p>4. Edit .env to change passwords, then build:</p>
+<pre><code>docker compose up -d --build</code></pre>
+
+<p>5. Visit <code>http://localhost:8080</code>, register with username <code>admin</code> to become administrator</p>
+
+<hr>
+
+<h2>Features</h2>
+
+<ul>
+    <li>🎬 Video upload with auto thumbnail generation</li>
+    <li>💬 Real-time danmaku (bullet comments) system</li>
+    <li>👥 User registration/login/TOTP 2FA</li>
+    <li>❤️ Like, favorite, comment, subscribe</li>
+    <li>🤖 AI content moderation (optional)</li>
+    <li>🗄️ S3-compatible object storage support</li>
+</ul>
+
+<hr>
+
+<h2>Tech Stack</h2>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Backend</th>
+            <th>Frontend</th>
+            <th>Database</th>
+            <th>Others</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Spring Boot 3.4</td>
+            <td>Vue 3.5 + Vuetify</td>
+            <td>MySQL 8</td>
+            <td>Docker</td>
+        </tr>
+        <tr>
+            <td>MyBatis-Plus</td>
+            <td>Vite + ArtPlayer</td>
+            <td>Redis 7</td>
+            <td>FFmpeg</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2>Project Structure</h2>
+
+<pre><code>├── docker/
+│   ├── Dockerfile          # Multi-stage build
+│   ├── docker-compose.yml  # Service orchestration
+│   └── .env.example        # Environment template
+├── TikTube/                # Backend Spring Boot
+├── TikTubeWeb/             # Frontend Vue
+└── tik_tube.sql            # Database script</code></pre>
+
+<hr>
+
+<h2>Troubleshooting</h2>
+
+<h3>Docker image pull failed</h3>
+
+<p>Configure registry mirror (Linux):</p>
+<pre><code>sudo tee /etc/docker/daemon.json &lt;&lt;EOF
+{"registry-mirrors": ["https://docker.1panel.live"]}
+EOF</code></pre>
+
+<p>Restart Docker service:</p>
+<pre><code>sudo systemctl restart docker</code></pre>
+
+<p><strong>Windows:</strong> Docker Desktop → Settings → Docker Engine → Add <code>registry-mirrors</code></p>
+
+<h3>Large file upload failed</h3>
+
+<ul>
+    <li>Videos over 2GB: compress first</li>
+    <li>MKV format: convert to MP4</li>
+</ul>
+
+<hr>
+
+<h2>Common Commands</h2>
+
+<p>Check status:</p>
+<pre><code>docker compose ps</code></pre>
+
+<p>View logs:</p>
+<pre><code>docker compose logs -f</code></pre>
+
+<p>Stop services:</p>
+<pre><code>docker compose down</code></pre>
+
+<p>Restart services:</p>
+<pre><code>docker compose restart</code></pre>
+
+<hr>
+
+<h2>Acknowledgements</h2>
+
+<p>Based on <a href="https://github.com/PuZhiweizuishuai/TikTube" target="_blank">PuZhiweizuishuai/TikTube</a> with
+    Docker optimization.</p>
+
+<hr>
+
+<h2>License</h2>
+
+<p><a href="https://github.com/CharyeahOwO/TikTube-Docker/blob/main/LICENSE" target="_blank">MIT License</a></p>
+
+<hr>
+
+<div
+    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+    <p style="color: #fff; font-size: 18px; margin-bottom: 15px;">⭐ If you find it useful, please give us a Star!</p>
+    <a href="https://github.com/CharyeahOwO/TikTube-Docker" target="_blank"
+        style="display: inline-block; background: #fff; color: #764ba2; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 18px;">🔗
+        GitHub: TikTube-Docker</a>
+    <p style="color: rgba(255,255,255,0.8); margin-top: 15px; font-size: 14px;">
+        https://github.com/CharyeahOwO/TikTube-Docker</p>
+</div>

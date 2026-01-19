@@ -1,0 +1,146 @@
+<div style="text-align: center;">
+    <img src="https://你的图床地址/logo.png" alt="TikTube Logo" width="200">
+    <h1>TikTube</h1>
+    <p>视频弹幕网站 | Docker 一键部署</p>
+    <p><a href="https://github.com/CharyeahOwO/TikTube-Docker" target="_blank">GitHub: TikTube-Docker</a></p>
+</div>
+
+<hr>
+
+<h2>快速开始</h2>
+
+<p>1. 克隆项目：</p>
+<pre><code>git clone https://github.com/CharyeahOwO/TikTube-Docker.git</code></pre>
+
+<p>2. 进入 docker 目录：</p>
+<pre><code>cd TikTube-Docker/docker</code></pre>
+
+<p>3. 复制环境变量配置文件：</p>
+<p><strong>Linux/Mac OS:</strong></p>
+<pre><code>cp .env.example .env</code></pre>
+
+<p><strong>Windows:</strong></p>
+<pre><code>copy .env.example .env</code></pre>
+
+<p>4. 编辑 .env 修改密码后，开始构建：</p>
+<pre><code>docker compose up -d --build</code></pre>
+
+<p>5. 访问 <code>http://localhost:8080</code>，注册用户名 <code>admin</code> 成为管理员</p>
+
+<hr>
+
+<h2>功能特性</h2>
+
+<ul>
+    <li>🎬 视频上传与自动封面生成</li>
+    <li>💬 实时弹幕系统</li>
+    <li>👥 用户注册/登录/TOTP 两步验证</li>
+    <li>❤️ 点赞、收藏、评论、订阅</li>
+    <li>🤖 AI 内容审核（可选）</li>
+    <li>🗄️ S3 兼容对象存储支持</li>
+</ul>
+
+<hr>
+
+<h2>技术栈</h2>
+
+<table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+        <tr>
+            <th>后端</th>
+            <th>前端</th>
+            <th>数据库</th>
+            <th>其他</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Spring Boot 3.4</td>
+            <td>Vue 3.5 + Vuetify</td>
+            <td>MySQL 8</td>
+            <td>Docker</td>
+        </tr>
+        <tr>
+            <td>MyBatis-Plus</td>
+            <td>Vite + ArtPlayer</td>
+            <td>Redis 7</td>
+            <td>FFmpeg</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2>项目结构</h2>
+
+<pre><code>├── docker/
+│   ├── Dockerfile          # 多阶段构建
+│   ├── docker-compose.yml  # 服务编排
+│   └── .env.example        # 环境变量模板
+├── TikTube/                # 后端 Spring Boot
+├── TikTubeWeb/             # 前端 Vue
+└── tik_tube.sql            # 数据库脚本</code></pre>
+
+<hr>
+
+<h2>常见问题</h2>
+
+<h3>Docker 拉取镜像失败</h3>
+
+<p>配置镜像加速（Linux）：</p>
+<pre><code>sudo tee /etc/docker/daemon.json &lt;&lt;EOF
+{"registry-mirrors": ["https://docker.1panel.live"]}
+EOF</code></pre>
+
+<p>重启 Docker 服务：</p>
+<pre><code>sudo systemctl restart docker</code></pre>
+
+<p><strong>Windows:</strong> Docker Desktop → Settings → Docker Engine → 添加 <code>registry-mirrors</code></p>
+
+<h3>大文件上传失败</h3>
+
+<ul>
+    <li>超过 2GB 的视频建议先压缩</li>
+    <li>MKV 格式建议转换为 MP4</li>
+</ul>
+
+<hr>
+
+<h2>常用命令</h2>
+
+<p>查看状态：</p>
+<pre><code>docker compose ps</code></pre>
+
+<p>查看日志：</p>
+<pre><code>docker compose logs -f</code></pre>
+
+<p>停止服务：</p>
+<pre><code>docker compose down</code></pre>
+
+<p>重启服务：</p>
+<pre><code>docker compose restart</code></pre>
+
+<hr>
+
+<h2>致谢</h2>
+
+<p>基于 <a href="https://github.com/PuZhiweizuishuai/TikTube" target="_blank">PuZhiweizuishuai/TikTube</a> 进行 Docker 化改造。
+</p>
+
+<hr>
+
+<h2>许可证</h2>
+
+<p><a href="https://github.com/CharyeahOwO/TikTube-Docker/blob/main/LICENSE" target="_blank">MIT License</a></p>
+
+<hr>
+
+<div
+    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px;">
+    <p style="color: #fff; font-size: 18px; margin-bottom: 15px;">⭐ 如果觉得有用，欢迎 Star 支持！</p>
+    <a href="https://github.com/CharyeahOwO/TikTube-Docker" target="_blank"
+        style="display: inline-block; background: #fff; color: #764ba2; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 18px;">🔗
+        GitHub: TikTube-Docker</a>
+    <p style="color: rgba(255,255,255,0.8); margin-top: 15px; font-size: 14px;">
+        https://github.com/CharyeahOwO/TikTube-Docker</p>
+</div>
